@@ -2,6 +2,9 @@
 
 from enum import Enum
 
+SHARP = "Sharp"
+SHARP_MARK = "#"
+
 
 class Key(Enum):
     A = 0
@@ -26,7 +29,7 @@ class Key(Enum):
 
     @property
     def name(self):
-        return super().name.replace("Sharp", "#")
+        return super().name.replace(SHARP, SHARP_MARK)
 
 
 class Scales(Enum):
@@ -53,3 +56,11 @@ class Scale:
 
     def __repr__(self):
         return "{}{}".format(self.base.name, self.scale.name)
+
+
+def parse_key(key_name: str):
+    for i in range(Key.ScaleSize.value):
+        key = Key(i)
+        if key_name == key.name:
+            return key
+    return False
