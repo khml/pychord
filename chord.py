@@ -22,6 +22,12 @@ class ChordType(Enum):
     minor6 = 13  # m6
     end = 14
 
+    @property
+    def name(self):
+        chord_name = super().name.replace("minor", "m").replace("major", "M").replace("seventh", "7") \
+            .replace("six", "6").replace("_", "-")
+        return chord_name
+
 
 chord_type_dict = \
     {
@@ -49,9 +55,11 @@ class Chord:
         self.keys = unroll(self.base, chord_type_dict[self.chord_type])
 
     def __repr__(self):
-        chord_name = self.chord_type.name.replace("minor", "m").replace("major", "M")\
-            .replace("seventh", "7").replace("six", "6").replace("_", "-")
-        return "{}{}".format(self.base.name, chord_name)
+        return "{}{}".format(self.base.name, self.chord_type.name)
+
+    @property
+    def name(self):
+        return self.__repr__()
 
 
 def unroll_all_chords():
