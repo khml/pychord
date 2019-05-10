@@ -2,7 +2,7 @@
 
 from enum import Enum
 
-from scale import Key, unroll
+from scale import Key, unroll, Scales, Scale
 
 
 class Chords(Enum):
@@ -52,3 +52,24 @@ class Chord:
         chord_name = self.chord_name.name.replace("minor", "m").replace("major", "M")\
             .replace("seventh", "7").replace("six", "6").replace("_", "-")
         return "{}{}".format(self.base.name, chord_name)
+
+
+def unroll_all_chords():
+    keys = [Key(i) for i in range(Key.ScaleSize.value)]
+    chords = [Chords(i) for i in range(Chords.end.value)]
+
+    major_scales = [Scale(key, Scales.major) for key in keys]
+    minor_scales = [Scale(key, Scales.minor) for key in keys]
+
+    scales = []
+    scales += major_scales
+    scales += minor_scales
+
+    chords_in_scale_dict = {}
+    for scale in scales:
+        chord_list = []
+        for key in scale.keys:
+            chord_list += [Chord(key, chord) for chord in chords]
+        chords_in_scale_dict[scale] = chord_list
+
+    return chords_in_scale_dict
