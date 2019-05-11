@@ -2,7 +2,7 @@
 
 import argparse
 
-from chord import unroll_all_chords, Chord, ChordType, parse_str_chord
+from Chord import unroll_all_chords, Chord, ChordType, parse_str_chord
 
 
 def parse_args():
@@ -13,7 +13,7 @@ def parse_args():
     return args
 
 
-def get_common_set(old: set, new: set):
+def get_common_set(old: set, new: set) -> set:
     if len(old) == 0:
         return new
 
@@ -25,7 +25,11 @@ def print_chord_types():
         print(ChordType(i).name)
 
 
-def find_scales(chord: Chord):
+def find_scales(chord: Chord) -> list:
+    """
+    :param chord:
+    :return: list of Scale
+    """
     scales = []
     for scale, chords in unroll_all_chords().items():
         if chord in chords:
