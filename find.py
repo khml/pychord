@@ -2,7 +2,8 @@
 
 import argparse
 
-from Chord import unroll_all_chords, Chord, ChordType, parse_str_chord
+from Chord import Chord, ChordType, parse_str_chord
+from Diatonic import Diatonic, DiatonicChords
 
 
 def parse_args():
@@ -17,7 +18,7 @@ def get_common_set(old: set, new: set) -> set:
     if len(old) == 0:
         return new
 
-    return old and new
+    return old & new
 
 
 def print_chord_types():
@@ -25,27 +26,32 @@ def print_chord_types():
         print(ChordType(i).name)
 
 
-def find_scales(chord: Chord) -> list:
+def find_keys(chord: Chord) -> list:
     """
     :param chord:
     :return: list of Scale
     """
-    scales = []
-    for scale, chords in unroll_all_chords().items():
-        if chord in chords:
-            scales.append(scale)
-    return scales
+    keys = []
+    diatonic: Diatonic
+    for diatonic in DiatonicChords:
+        if chord in diatonic.chords:
+            keys.append(diatonic.key)
+    return keys
 
 
 def find_common_scales(chord_list: list):
     common_scales = set()
     for chord_name in chord_list:
         chord = parse_str_chord(chord_name)
-        scales = set(find_scales(chord))
+        keys = set(find_keys(chord))
         print(chord)
-        print(scales)
+        print(keys)
+        for key in keys:
+            diatonic = Diatonic(key)
+            print(diatonic)
+            print(diatonic.key.notes)
         print()
-        common_scales = get_common_set(common_scales, scales)
+        common_scales = get_common_set(common_scales, keys)
 
     print("Common Scales")
     print(common_scales)

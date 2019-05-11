@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-from Key import Key
+from Key import Key, Notes, Scale
 from Chord import unroll_all_chords, Chord, chord_in_key
 
 
@@ -24,3 +24,11 @@ class Diatonic:
     @property
     def chords(self):
         return self._chords
+
+    def __repr__(self):
+        return "{} : {}".format(self.key, self.chords)
+
+
+DiatonicChords = []
+DiatonicChords += [Diatonic(Key(note, Scale.major)) for note in Notes]
+DiatonicChords += [Diatonic(Key(note, Scale.minor)) for note in Notes]

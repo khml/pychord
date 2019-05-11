@@ -33,6 +33,9 @@ class Note(Enum):
     def __hash__(self):
         return hash(self.name)
 
+    def __repr__(self):
+        return self.name
+
     @property
     def name(self) -> str:
         return super().name.replace(SHARP, SHARP_MARK)
