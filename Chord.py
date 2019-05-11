@@ -2,7 +2,7 @@
 
 from enum import Enum
 
-from Key import Note, KeyList, unroll_notes, SHARP_MARK, parse_note_name
+from Key import Note, Key, KeyList, unroll_notes, SHARP_MARK, parse_note_name
 
 
 class ChordType(Enum):
@@ -157,3 +157,10 @@ def parse_str_chord(chord_name: str):
         return False
 
     return Chord(key, chord_type)
+
+
+def chord_in_key(chord: Chord, key: Key) -> bool:
+    for note in chord.notes:
+        if note not in key.notes:
+            return False
+    return True
