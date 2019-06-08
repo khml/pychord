@@ -45,7 +45,7 @@ def unroll_notes(base: Note, delta_list: list) -> list:
     """
     :param base:
     :param delta_list: list of int
-    :return: list of Key
+    :return: list of note
     """
     return [base + c for c in delta_list]
 
@@ -53,6 +53,12 @@ def unroll_notes(base: Note, delta_list: list) -> list:
 class Scale(Enum):
     major = 0
     minor = 1
+
+    def __hash__(self):
+        return self.value
+
+    def __eq__(self, other):
+        return self.value == other.value
 
 
 class Key:
